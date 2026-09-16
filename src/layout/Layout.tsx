@@ -1,11 +1,14 @@
 import { Outlet } from "react-router";
-import { SuperiorBar } from "../components/superior-bar/SuperiorBar";
+import { Navbar } from "../components/navbar";
+import { SubNavbar } from "../components/sub-navbar";
+import { AppContext } from "../context/app.context";
 
 export function Layout() {
   return (
-    <>
-      <SuperiorBar />
+    <AppContext>
+      <Navbar />
+      <SubNavbar />
       <Outlet />
-    </>
+    </AppContext>
   );
 }
