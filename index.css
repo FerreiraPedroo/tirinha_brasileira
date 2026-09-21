@@ -3,7 +3,7 @@
 @theme {
   --color-brasil-verde: #009b3a;
   --color-brasil-amarelo: #fedf00;
-  --color-brasil-azul: #002776;
+  --color-brasil-azul: #080889;
   --color-brasil-branco: #ffffff;
 }
 
@@ -32,6 +32,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 
 #root {
   /* border: 5px solid blue; */
