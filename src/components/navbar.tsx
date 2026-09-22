@@ -22,7 +22,7 @@ export function Navbar() {
     <nav className={`min-w-12 flex justify-between py-1 px-2 md:py-2 md:px-4 ${mediaColor.nav["green"]}`}>
       <div className="flex gap-2 items-center place-content-center text-center">
         <p
-          className={`min-h-8 md:min-h-12 h-8 md:h-10 min-w-8 md:min-w-12 w-8 md:w-10 flex items-center justify-center text-md rounded-full font-medium border ${mediaColor.navButton["green"]}`}
+          className={`min-h-8 md:min-h-10 h-8 md:h-10 min-w-8 md:min-w-10 w-8 md:w-10 flex items-center justify-center text-md rounded-full font-medium border ${mediaColor.navButton["green"]}`}
         >
           <img
             src="../../public/icons/menu.png"
@@ -31,7 +31,7 @@ export function Navbar() {
           />
         </p>
         <p
-          className={`min-h-8 md:min-h-12 h-8 md:h-10 min-w-8 md:min-w-12 w-8 md:w-10 flex items-center justify-center text-md rounded-full font-medium border ${mediaColor.navButton["green"]}`}
+          className={`min-h-8 md:min-h-10 h-8 md:h-10 min-w-8 md:min-w-10 w-8 md:w-10 flex items-center justify-center text-md rounded-full font-medium border ${mediaColor.navButton["green"]}`}
         >
           <img
             src="../../public/icons/search.png"

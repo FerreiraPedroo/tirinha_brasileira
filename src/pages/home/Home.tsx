@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams, useSearchParams } from "react-router";
-import { PostImgText } from "./PostImgText";
+import { Post } from "../../components/post/Post";
+import { postSimulate } from "../../lib/postSimulate";
 
 type Post = {
   id: number;
@@ -214,45 +215,24 @@ export function Home() {
   const [postList, setPostList] = useState<any[]>(posts);
   const [viewCursor, setViewCursor] = useState(0);
 
-  useEffect(() => {
-    console.log(urlParams.entries());
-  }, [urlParams]);
-
   const [loading, setLoading] = useState(false);
 
   const observerRef = useRef(null);
 
   async function loadPosts() {
     if (loading) return;
-    console.log({ loading, postList });
     setLoading(true);
 
     // Simulando API
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    const newPosts = Array.from({ length: 5 }, (_, index) => ({
-      id: crypto.randomUUID(),
-
-      dateCreated: new Date().toISOString(),
-      title: `Post ${posts.length + index + 1}`,
-      content: [
-        {
-          model: "IMG_TEXT",
-          image: "https://picsum.photos/seed/xzset5C/3370/460?grayscale&blur=9",
-          content:
-            "Deputo vulgivagus sulum vitae surculus cupio tabernus optio. Quo bene sursum curvo pectus adsidue desolo tabella arcesso. Texo fuga adsum creator celebrer tamisium totidem.\nTui sint asper pel ultra volubilis vestigium adulatio. Vicissitudo antiquus deorsum conturbo placeat depono adflicto ante distinctio debilito. Temeritas triumphus tamquam cogo.\nAliquid ea natus facere maiores minima solio antiquus. Thorax termes reprehenderit suppellex studio peior ventus. Tabesco autus vulgo vestigium deludo tertius.\nTriduana suscipit deleniti commodo temptatio certus admoveo. Tenetur veniam comprehendo doloribus. Ocer suspendo necessitatibus stips coerceo claro pecus adeptio facilis terreo.\nCarus decens careo tandem magnam strues careo canto arcesso clarus. Baiulus tumultus accendo. Inflammatio cultura ipsam compello mollitia cultura convoco.\nDistinctio dicta consuasor dens corroboro. Vicinus tutamen viscus voluptatum stipes thesis cubitum territo. Attollo aut aduro maiores ustilo id caelum.\nCuro alius dapifer aiunt surgo adulatio odio aperio quidem altus. Catena coruscus centum amplus volo coerceo utilis universe. Angustus talus fuga textus curia odit canonicus nulla careo.\nSomnus ante decor urbs. Valetudo barba victus clibanus carmen totidem suadeo neque defluo. Asporto ad atrocitas.\nAqua usque acerbitas termes vae patria amoveo. Defero sapiente appositus atrocitas thesaurus vilitas tabella. Decor armarium conicio curvo aufero maiores alter temporibus adfero trado.\nThalassinus vulariter arma libero consequuntur explicabo soleo cedo natus aequus. Defaeco theca versus fuga color aperiam corroboro esse occaecati. Amplexus temptatio creptio tyrannus odio aggredior utrum angelus exercitationem anser.\nContabesco ceno conturbo aequitas depono compono verus quidem. Cursus debitis amor. Ademptio alo adversus deleo vesco perferendis accusamus totam.\nTripudio pauper absconditus xiphias conduco abutor solio audeo capio curo. Usque nisi cariosus. Baiulus aveho celer pax nam officiis pecto autus.\nCrastinus temporibus corpus veritatis suadeo. Videlicet caute vigilo error clibanus tui defungo eos. Decipio stipes delibero.\nTerra baiulus copia perferendis tondeo attollo amita iure. Tandem trepide conitor teres cumque alienus cribro claustrum auditor. Adaugeo ager quaerat dapifer vereor decimus sollers desparatus sapiente.\nCarus ab arca caterva optio voluptate spes. Tum virga amitto comparo admoveo. Carcer corporis cumque audacia coepi antea.",
-        },
-      ],
-    }));
-
-    setPostList((current) => [...current, ...newPosts!]);
+    const newPosts = Array.from({ length: 5 }, (_, index) => postSimulate());
+    const posts = await Promise.all(newPosts);
+    console.log(posts);
+    setPostList((current) => [...current, ...posts!]);
 
     setLoading(false);
   }
-
-  // useEffect(() => {
-  //   loadPosts();
-  // }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -272,11 +252,14 @@ export function Home() {
 
     return () => observer.disconnect();
   }, [loading]);
+  // useEffect(() => {
+  //   console.log(urlParams.entries());
+  // }, [urlParams]);
 
   return (
     <main className="relative w-auto overflow-auto">
       {postList.map((post) => (
-        <PostImgText key={post.id} data={post} />
+        <Post key={post.id} data={post} />
       ))}
       <div className="h-20 w=full" ref={observerRef}>
         {loading && <p>Carregando...</p>}
