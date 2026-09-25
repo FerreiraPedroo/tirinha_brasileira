@@ -9,6 +9,8 @@ export async function postSimulate() {
     id,
     title: article.title,
     subtitle: article.subtitle,
+    category: category(),
+    image: article.image,
     dateCreated: article.dateCreated,
     contents: await contents(),
     interactions: await interactions(),
@@ -65,11 +67,11 @@ const comment = async () => {
 };
 
 const contents = async () => {
-  const count = Math.floor(Math.random() * 5);
+  const count = Math.floor(Math.random() * 7);
   const contents = [];
 
   for (let i = 0; i < count; i++) {
-    const type = Math.ceil(Math.random() * 3);
+    const type = Number.parseInt((Math.random() * 4).toFixed(0));
 
     const article = await fetch(`https://lorem-api.com/api/article/foo${Math.floor(Math.random() * 50000)}`).then(
       (response) => response.json(),
@@ -110,4 +112,10 @@ const contents = async () => {
   }
 
   return contents;
+};
+
+const category = () => {
+  const category = Math.floor(Math.random() * 5);
+
+  return ["NOTICE", "EMPREGO", "LIVE", "INVESTIGAÇÃO", "OPNIÃO", "GAMES"][category];
 };
